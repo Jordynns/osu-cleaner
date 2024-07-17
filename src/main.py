@@ -71,7 +71,7 @@ class Menu(tk.CTkFrame):
     # // Creates Widgets
     # // Labels, Buttons, Checkboxes
     def create_widgets(self, master):
-        global scan_button, delete_button, check_var_audio_skinable, check_var_videos, check_var_dirs
+        global scan_button, delete_button, check_var_audio_skinable, check_var_videos, check_var_dirs, check_var_storyboard
 
         # // Scan Button Creation & Placement
         scan_button = tk.CTkButton(
@@ -105,7 +105,8 @@ class Menu(tk.CTkFrame):
         def button_status():
             if (check_var_audio_skinable.get() == "on"
                     or check_var_dirs.get() == "on"
-                    or check_var_videos.get() == "on"):
+                    or check_var_videos.get() == "on"
+                    or check_var_storyboard.get() == "on"):
                 scan_button.configure(state="normal")
             else:
                 scan_button.configure(state="disabled")
@@ -150,7 +151,7 @@ class Menu(tk.CTkFrame):
         check_var_dirs = tk.StringVar(value="off")
         dirs = tk.CTkCheckBox(
             self,
-            text="Delete Storyboards and\nJunk Directory Files",
+            text="Junk Directory Files",
             command=button_status,
             variable=check_var_dirs,
             onvalue="on",
@@ -163,6 +164,24 @@ class Menu(tk.CTkFrame):
             font=("Exo2-Regular.otf", 14)
         )
         dirs.place(relx=0.05, rely=0.18)
+
+        # // Checkbox 4 Creation & Placement
+        check_var_storyboard = tk.StringVar(value="off")
+        storyboard = tk.CTkCheckBox(
+            self,
+            text="Delete Storyboard Files (.osb)",
+            command=button_status,
+            variable=check_var_storyboard,
+            onvalue="on",
+            offvalue="off",
+            checkbox_height=20,
+            checkbox_width=20,
+            bg_color="#161A1D",
+            fg_color="#cd5e77",
+            hover_color="#e17f93",
+            font=("Exo2-Regular.otf", 14)
+        )
+        storyboard.place(relx=0.05, rely=0.26)
 
 
 # // GUI Console|Log
@@ -232,17 +251,17 @@ def main():
     # // End Timer
     end_time = time.time()
 
-    # // Simple Print Statement With
-    # // File Size in MB, Total Files and Time Elapsed
-    print(f"File Size: {int(byte_file_size / 1048576)} MB\nTotal files: {len(file_deletion)}\n"
-          f"Time elapsed: {round(end_time - start_time, 2)} seconds")
-
     # // If Total Entries In File Deletion Variable
     # // Is More Than 1 Enable The Delete Button
     if len(file_deletion) >= 1:
         delete_button.configure(state="normal")
     else:
         delete_button.configure(state="disabled")
+
+    # // Simple Print Statement With
+    # // File Size in MB, Total Files and Time Elapsed
+    print(f"File Size: {int(byte_file_size / 1048576)} MB\nTotal files: {len(file_deletion)}\n"
+          f"Time elapsed: {round(end_time - start_time, 2)} seconds")
 
 
 # // Audio|Skin File Detection
@@ -254,7 +273,8 @@ def is_map_file(file):
             and file.name.startswith(tuple(base_file_names))
             and check_var_audio_skinable.get() == "on" or file.is_file()
             and file.name.endswith(tuple(video_extension))
-            and check_var_videos.get() == "on"):
+            and check_var_videos.get() == "on" or file.name.endswith(".osb")
+            and check_var_storyboard.get() == "on"):
         return True
 
 
