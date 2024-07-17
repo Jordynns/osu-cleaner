@@ -1,5 +1,6 @@
 # // Created by Jordyn | 16/07/2024 | Refactor
 # // osu! File Cleaner | GUI Project
+import customtkinter
 
 # // Imports
 from dictionary import *
@@ -8,6 +9,7 @@ import pathlib
 import time
 import customtkinter as tk
 import pyglet
+from PIL import Image
 
 # // Tkinter Theme
 tk.set_appearance_mode("dark")
@@ -28,7 +30,7 @@ class App(tk.CTk):
         self.resizable(False, False)
 
         # // Background Colour
-        self.configure(fg_color="#101214")
+        self.configure(fg_color="#161A1D")
 
         # // Exe | File Icon
         self.iconbitmap("../Resources/icon.ico")
@@ -47,12 +49,34 @@ class Labels(tk.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
 
-        # // Logo & Console Label Render
-        self.logo = tk.CTkLabel(master, text="OSU Cleaner", font=("Exo2-Regular.otf", 30))
-        self.logo.place(x=50, y=25)
+        global total_label, file_size_label, time_label
 
-        self.console = tk.CTkLabel(master, text="Console", font=("Exo2-Regular.otf", 18))
-        self.console.place(x=575, y=75)
+        # // Logo Image
+        image = customtkinter.CTkImage(light_image=Image.open("../Resources/icon.ico"),
+                                       dark_image=Image.open("../Resources/icon.ico"),
+                                       size=(128, 128))
+        image.label = customtkinter.CTkLabel(master, image=image, text="")
+        image.label.place(x=820, y=4)
+
+        # // Console Label Render
+        console = tk.CTkLabel(master, text="Console", font=("Exo2-Regular.otf", 18))
+        console.place(relx=0.5, y=112)
+
+        # // Option Label Render
+        options = tk.CTkLabel(master, text="Select options for files to be scanned:", font=("Exo2-Regular.otf", 14))
+        options.place(x=6, y=2)
+
+        # // Total Label Render
+        total_label = tk.CTkLabel(master, text="Total Files: ", font=("Exo2-Regular.otf", 14))
+        total_label.place(x=8, y=645)
+
+        # // Total Label Render
+        file_size_label = tk.CTkLabel(master, text="Total Size: ", font=("Exo2-Regular.otf", 14))
+        file_size_label.place(x=8, y=665)
+
+        # // Total Label Render
+        time_label = tk.CTkLabel(master, text="Time Elapsed: ", font=("Exo2-Regular.otf", 14))
+        time_label.place(x=8, y=685)
 
 
 # // Left Side GUI Menu
@@ -60,49 +84,54 @@ class Menu(tk.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
 
-        # // Create a Side Menu
-        tk.CTkLabel(self, text="", bg_color="#161A1D", fg_color="transparent", corner_radius=20).pack(
-            expand=True, fill="both")
-        self.place(x=0, y=80, relwidth=0.3, relheight=1)
-
         # // Render the Widgets
         self.create_widgets(master)
 
     # // Creates Widgets
     # // Labels, Buttons, Checkboxes
     def create_widgets(self, master):
+        # // Global Variables
         global scan_button, delete_button
         global check_var_audio, check_var_image, check_var_videos, check_var_dirs, check_var_storyboard
 
         # // Scan Button Creation & Placement
         scan_button = tk.CTkButton(
-            self,
-            text="Scan for Files",
+            master,
             command=main,
             state="disabled",
-            corner_radius=30,
+            text="Scan for Files",
+            text_color="white",
+            font=("Exo2-Regular.otf", 14),
+            hover=True,
+            hover_color="#1D2125",
+            border_width=2,
+            corner_radius=20,
+            border_color="#d3d3d3",
             bg_color="#161A1D",
-            fg_color="#cd5e77",
-            hover_color="#e17f93",
-            font=("Exo2-Regular.otf", 14)
+            fg_color="#161A1D",
         )
-        scan_button.place(relx=0.25, rely=0.84)
+        scan_button.place(relx=0.35, rely=0.93)
 
         # // Delete Button Creation & Placement
         delete_button = tk.CTkButton(
             master,
-            text="Delete Files",
             command=delete,
             state="disabled",
-            fg_color="red",
-            hover_color="darkred",
-            corner_radius=30,
-            font=("Exo2-Regular.otf", 14)
+            text="Delete Files",
+            text_color="#F87168",
+            font=("Exo2-Regular.otf", 14),
+            hover=True,
+            hover_color="#1D2125",
+            border_width=2,
+            corner_radius=20,
+            border_color="#F87168",
+            bg_color="#161A1D",
+            fg_color="#161A1D",
         )
-        delete_button.place(relx=0.55, rely=0.95)
+        delete_button.place(relx=0.55, rely=0.93)
 
         # // Status of Checkbox
-        # // Enabled|Disable Scan Button
+        # // Enable | Disable Scan Button
         def button_status():
             if (check_var_audio.get() == "on"
                     or check_var_image.get() == "on"
@@ -116,101 +145,101 @@ class Menu(tk.CTkFrame):
         # // Checkbox 1 Creation & Placement
         check_var_audio = tk.StringVar(value="off")
         audio = tk.CTkCheckBox(
-            self,
+            master,
             text="Audio Hitsounds (mp3, ogg, wav)",
             command=button_status,
             variable=check_var_audio,
             onvalue="on",
             offvalue="off",
-            checkbox_height=20,
-            checkbox_width=20,
+            checkbox_height=14,
+            checkbox_width=14,
             bg_color="#161A1D",
             fg_color="#cd5e77",
             hover_color="#e17f93",
-            font=("Exo2-Regular.otf", 14)
+            font=("Exo2-Regular.otf", 12)
         )
-        audio.place(relx=0.05, rely=0.02)
+        audio.place(x=12, y=27)
 
         # // Checkbox 2 Creation & Placement
         check_var_image = tk.StringVar(value="off")
         image = tk.CTkCheckBox(
-            self,
+            master,
             text="Skin Assets (jpg, jpeg, png)",
             command=button_status,
             variable=check_var_image,
             onvalue="on",
             offvalue="off",
-            checkbox_height=20,
-            checkbox_width=20,
+            checkbox_height=14,
+            checkbox_width=14,
             bg_color="#161A1D",
             fg_color="#cd5e77",
             hover_color="#e17f93",
-            font=("Exo2-Regular.otf", 14)
+            font=("Exo2-Regular.otf", 12)
         )
-        image.place(relx=0.05, rely=0.10)
+        image.place(x=12, y=47)
 
         # // Checkbox 3 Creation & Placement
         check_var_videos = tk.StringVar(value="off")
         videos = tk.CTkCheckBox(
-            self,
+            master,
             text="Delete Video Files (mp4, avi, flv)",
             command=button_status,
             variable=check_var_videos,
             onvalue="on",
             offvalue="off",
-            checkbox_height=20,
-            checkbox_width=20,
+            checkbox_height=14,
+            checkbox_width=14,
             bg_color="#161A1D",
             fg_color="#cd5e77",
             hover_color="#e17f93",
-            font=("Exo2-Regular.otf", 14)
+            font=("Exo2-Regular.otf", 12)
         )
-        videos.place(relx=0.05, rely=0.18)
+        videos.place(x=12, y=67)
 
         # // Checkbox 4 Creation & Placement
         check_var_dirs = tk.StringVar(value="off")
         dirs = tk.CTkCheckBox(
-            self,
+            master,
             text="Junk Directory Files",
             command=button_status,
             variable=check_var_dirs,
             onvalue="on",
             offvalue="off",
-            checkbox_height=20,
-            checkbox_width=20,
+            checkbox_height=14,
+            checkbox_width=14,
             bg_color="#161A1D",
             fg_color="#cd5e77",
             hover_color="#e17f93",
-            font=("Exo2-Regular.otf", 14)
+            font=("Exo2-Regular.otf", 12)
         )
-        dirs.place(relx=0.05, rely=0.26)
+        dirs.place(x=12, y=87)
 
         # // Checkbox 5 Creation & Placement
         check_var_storyboard = tk.StringVar(value="off")
         storyboard = tk.CTkCheckBox(
-            self,
+            master,
             text="Delete Storyboard Files (osb)",
             command=button_status,
             variable=check_var_storyboard,
             onvalue="on",
             offvalue="off",
-            checkbox_height=20,
-            checkbox_width=20,
+            checkbox_height=14,
+            checkbox_width=14,
             bg_color="#161A1D",
             fg_color="#cd5e77",
             hover_color="#e17f93",
-            font=("Exo2-Regular.otf", 14)
+            font=("Exo2-Regular.otf", 12)
         )
-        storyboard.place(relx=0.05, rely=0.34)
+        storyboard.place(x=12, y=107)
 
 
-# // GUI Console|Log
+# // GUI Console | Log
 class Console(tk.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
 
         # // Console Size Parameters
-        self.place(x=298, y=100, relwidth=0.68, relheight=0.75)
+        self.place(x=12, y=140, relwidth=0.975, relheight=0.70)
         self.pack_propagate(False)
 
         # // Console Creation & Placement
@@ -278,10 +307,10 @@ def main():
     else:
         delete_button.configure(state="disabled")
 
-    # // Simple Print Statement With
-    # // File Size in MB, Total Files and Time Elapsed
-    print(f"File Size: {int(byte_file_size / 1048576)} MB\nTotal files: {len(file_deletion)}\n"
-          f"Time elapsed: {round(end_time - start_time, 2)} seconds")
+    # // Total Files, File Size and Time Elapsed Label Update
+    total_label.configure(text="Total Files: " + str(len(file_deletion)))
+    file_size_label.configure(text=f"Total Size: {int(byte_file_size / 1048576)} MB")
+    time_label.configure(text=f"Time Elapsed: {round(end_time - start_time, 3)} seconds")
 
 
 # // Audio|Skin File Detection
@@ -313,7 +342,7 @@ def console_insert(file):
     # // Enables, Inserts Text, Then Disables
     # // Disable Sets To Read-Only
     textbox.configure(state="normal")
-    textbox.insert(tk.END, text=f"{file.name}\n")
+    textbox.insert(tk.END, text=f"{file}\n")
     textbox.configure(state="disabled")
 
 
