@@ -1,5 +1,5 @@
 video_extension = [".mp4", ".avi", ".flv"]
-base_file_names = [
+audio_file_names = [
 
     # Audio File Names
     "combobreak",
@@ -9,11 +9,14 @@ base_file_names = [
     "drum",
     "normal",
     "soft",
-    "spinner",
+    "spinnerspin",
+    "spinnerbonus",
     "taiko",
+]
+
+image_file_names = [
 
     # Skinable File Names
-
     "comboburst",
     "score",
     "spinner",
