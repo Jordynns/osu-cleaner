@@ -26,7 +26,11 @@ class App(tk.CTk):
         self.title("OSU Cleaner")
         self.geometry("960x720")
         self.resizable(False, False)
+
+        # // Background Colour
         self.configure(fg_color="#101214")
+
+        # // Exe | File Icon
         self.iconbitmap("../Resources/icon.ico")
 
         # // Widgets
@@ -47,7 +51,7 @@ class Labels(tk.CTkFrame):
         self.logo = tk.CTkLabel(master, text="OSU Cleaner", font=("Exo2-Regular.otf", 30))
         self.logo.place(x=50, y=25)
 
-        self.console = tk.CTkLabel(master, text="Console", font=("Exo2-Regular.otf", 14))
+        self.console = tk.CTkLabel(master, text="Console", font=("Exo2-Regular.otf", 18))
         self.console.place(x=575, y=75)
 
 
@@ -79,7 +83,7 @@ class Menu(tk.CTkFrame):
             bg_color="#161A1D",
             fg_color="#cd5e77",
             hover_color="#e17f93",
-            font=("Exo2-Regular.otf", 12)
+            font=("Exo2-Regular.otf", 14)
         )
         scan_button.place(relx=0.25, rely=0.84)
 
@@ -92,7 +96,7 @@ class Menu(tk.CTkFrame):
             fg_color="red",
             hover_color="darkred",
             corner_radius=30,
-            font=("Exo2-Regular.otf", 12)
+            font=("Exo2-Regular.otf", 14)
         )
         delete_button.place(relx=0.55, rely=0.95)
 
@@ -120,7 +124,7 @@ class Menu(tk.CTkFrame):
             bg_color="#161A1D",
             fg_color="#cd5e77",
             hover_color="#e17f93",
-            font=("Exo2-Regular.otf", 12)
+            font=("Exo2-Regular.otf", 14)
         )
         audio_skinable.place(relx=0.05, rely=0.02)
 
@@ -138,7 +142,7 @@ class Menu(tk.CTkFrame):
             bg_color="#161A1D",
             fg_color="#cd5e77",
             hover_color="#e17f93",
-            font=("Exo2-Regular.otf", 12)
+            font=("Exo2-Regular.otf", 14)
         )
         videos.place(relx=0.05, rely=0.10)
 
@@ -156,7 +160,7 @@ class Menu(tk.CTkFrame):
             bg_color="#161A1D",
             fg_color="#cd5e77",
             hover_color="#e17f93",
-            font=("Exo2-Regular.otf", 12)
+            font=("Exo2-Regular.otf", 14)
         )
         dirs.place(relx=0.05, rely=0.18)
 
