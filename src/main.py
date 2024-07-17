@@ -7,10 +7,12 @@ import os
 import pathlib
 import time
 import customtkinter as tk
+import pyglet
 
 # // Tkinter Theme
 tk.set_appearance_mode("dark")
 tk.set_default_color_theme("dark-blue")
+pyglet.font.add_file("../Resources/Exo2-Regular.otf")
 
 
 # // ------------------------------ \\
@@ -24,10 +26,12 @@ class App(tk.CTk):
         self.title("OSU Cleaner")
         self.geometry("960x720")
         self.resizable(False, False)
+        self.configure(fg_color="#101214")
+        self.iconbitmap("../Resources/icon.ico")
 
         # // Widgets
-        self.labels = Labels(self)
         self.menu = Menu(self)
+        self.labels = Labels(self)
         self.console = Console(self)
 
         # // Run
@@ -40,10 +44,10 @@ class Labels(tk.CTkFrame):
         super().__init__(master)
 
         # // Logo & Console Label Render
-        self.logo = tk.CTkLabel(master, text="OSU Cleaner", font=("Arial", 30))
+        self.logo = tk.CTkLabel(master, text="OSU Cleaner", font=("Exo2-Regular.otf", 30))
         self.logo.place(x=50, y=25)
 
-        self.console = tk.CTkLabel(master, text="Console", font=("Arial", 14))
+        self.console = tk.CTkLabel(master, text="Console", font=("Exo2-Regular.otf", 14))
         self.console.place(x=575, y=75)
 
 
@@ -53,7 +57,7 @@ class Menu(tk.CTkFrame):
         super().__init__(master)
 
         # // Create a Side Menu
-        tk.CTkLabel(self, text="", bg_color="transparent", fg_color="transparent").pack(
+        tk.CTkLabel(self, text="", bg_color="#161A1D", fg_color="transparent", corner_radius=20).pack(
             expand=True, fill="both")
         self.place(x=0, y=80, relwidth=0.3, relheight=1)
 
@@ -72,6 +76,10 @@ class Menu(tk.CTkFrame):
             command=main,
             state="disabled",
             corner_radius=30,
+            bg_color="#161A1D",
+            fg_color="#cd5e77",
+            hover_color="#e17f93",
+            font=("Exo2-Regular.otf", 12)
         )
         scan_button.place(relx=0.25, rely=0.84)
 
@@ -84,6 +92,7 @@ class Menu(tk.CTkFrame):
             fg_color="red",
             hover_color="darkred",
             corner_radius=30,
+            font=("Exo2-Regular.otf", 12)
         )
         delete_button.place(relx=0.55, rely=0.95)
 
@@ -107,7 +116,11 @@ class Menu(tk.CTkFrame):
             onvalue="on",
             offvalue="off",
             checkbox_height=20,
-            checkbox_width=20
+            checkbox_width=20,
+            bg_color="#161A1D",
+            fg_color="#cd5e77",
+            hover_color="#e17f93",
+            font=("Exo2-Regular.otf", 12)
         )
         audio_skinable.place(relx=0.05, rely=0.02)
 
@@ -121,7 +134,11 @@ class Menu(tk.CTkFrame):
             onvalue="on",
             offvalue="off",
             checkbox_height=20,
-            checkbox_width=20
+            checkbox_width=20,
+            bg_color="#161A1D",
+            fg_color="#cd5e77",
+            hover_color="#e17f93",
+            font=("Exo2-Regular.otf", 12)
         )
         videos.place(relx=0.05, rely=0.10)
 
@@ -135,7 +152,11 @@ class Menu(tk.CTkFrame):
             onvalue="on",
             offvalue="off",
             checkbox_height=20,
-            checkbox_width=20
+            checkbox_width=20,
+            bg_color="#161A1D",
+            fg_color="#cd5e77",
+            hover_color="#e17f93",
+            font=("Exo2-Regular.otf", 12)
         )
         dirs.place(relx=0.05, rely=0.18)
 
@@ -153,8 +174,10 @@ class Console(tk.CTkFrame):
         global textbox
         textbox = tk.CTkTextbox(
             self,
-            font=("Arial", 14),
+            font=("Exo2-Regular.otf", 14),
             corner_radius=0,
+            bg_color="#161A1D",
+            fg_color="#22272B",
             state="disabled",
             wrap="char"
         )
