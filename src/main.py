@@ -71,7 +71,8 @@ class Menu(tk.CTkFrame):
     # // Creates Widgets
     # // Labels, Buttons, Checkboxes
     def create_widgets(self, master):
-        global scan_button, delete_button, check_var_audio_skinable, check_var_videos, check_var_dirs, check_var_storyboard
+        global scan_button, delete_button
+        global check_var_audio, check_var_image, check_var_videos, check_var_dirs, check_var_storyboard
 
         # // Scan Button Creation & Placement
         scan_button = tk.CTkButton(
@@ -103,7 +104,8 @@ class Menu(tk.CTkFrame):
         # // Status of Checkbox
         # // Enabled|Disable Scan Button
         def button_status():
-            if (check_var_audio_skinable.get() == "on"
+            if (check_var_audio.get() == "on"
+                    or check_var_image.get() == "on"
                     or check_var_dirs.get() == "on"
                     or check_var_videos.get() == "on"
                     or check_var_storyboard.get() == "on"):
@@ -112,12 +114,12 @@ class Menu(tk.CTkFrame):
                 scan_button.configure(state="disabled")
 
         # // Checkbox 1 Creation & Placement
-        check_var_audio_skinable = tk.StringVar(value="off")
-        audio_skinable = tk.CTkCheckBox(
+        check_var_audio = tk.StringVar(value="off")
+        audio = tk.CTkCheckBox(
             self,
-            text="Delete Audio/Skinable Files",
+            text="Audio Hitsounds (mp3, ogg, wav)",
             command=button_status,
-            variable=check_var_audio_skinable,
+            variable=check_var_audio,
             onvalue="on",
             offvalue="off",
             checkbox_height=20,
@@ -127,13 +129,31 @@ class Menu(tk.CTkFrame):
             hover_color="#e17f93",
             font=("Exo2-Regular.otf", 14)
         )
-        audio_skinable.place(relx=0.05, rely=0.02)
+        audio.place(relx=0.05, rely=0.02)
 
         # // Checkbox 2 Creation & Placement
+        check_var_image = tk.StringVar(value="off")
+        image = tk.CTkCheckBox(
+            self,
+            text="Skin Assets (jpg, jpeg, png)",
+            command=button_status,
+            variable=check_var_image,
+            onvalue="on",
+            offvalue="off",
+            checkbox_height=20,
+            checkbox_width=20,
+            bg_color="#161A1D",
+            fg_color="#cd5e77",
+            hover_color="#e17f93",
+            font=("Exo2-Regular.otf", 14)
+        )
+        image.place(relx=0.05, rely=0.10)
+
+        # // Checkbox 3 Creation & Placement
         check_var_videos = tk.StringVar(value="off")
         videos = tk.CTkCheckBox(
             self,
-            text="Delete Video Files",
+            text="Delete Video Files (mp4, avi, flv)",
             command=button_status,
             variable=check_var_videos,
             onvalue="on",
@@ -145,9 +165,9 @@ class Menu(tk.CTkFrame):
             hover_color="#e17f93",
             font=("Exo2-Regular.otf", 14)
         )
-        videos.place(relx=0.05, rely=0.10)
+        videos.place(relx=0.05, rely=0.18)
 
-        # // Checkbox 3 Creation & Placement
+        # // Checkbox 4 Creation & Placement
         check_var_dirs = tk.StringVar(value="off")
         dirs = tk.CTkCheckBox(
             self,
@@ -163,13 +183,13 @@ class Menu(tk.CTkFrame):
             hover_color="#e17f93",
             font=("Exo2-Regular.otf", 14)
         )
-        dirs.place(relx=0.05, rely=0.18)
+        dirs.place(relx=0.05, rely=0.26)
 
-        # // Checkbox 4 Creation & Placement
+        # // Checkbox 5 Creation & Placement
         check_var_storyboard = tk.StringVar(value="off")
         storyboard = tk.CTkCheckBox(
             self,
-            text="Delete Storyboard Files (.osb)",
+            text="Delete Storyboard Files (osb)",
             command=button_status,
             variable=check_var_storyboard,
             onvalue="on",
@@ -181,7 +201,7 @@ class Menu(tk.CTkFrame):
             hover_color="#e17f93",
             font=("Exo2-Regular.otf", 14)
         )
-        storyboard.place(relx=0.05, rely=0.26)
+        storyboard.place(relx=0.05, rely=0.34)
 
 
 # // GUI Console|Log
@@ -270,9 +290,9 @@ def is_map_file(file):
     # // And Starts/Ends With Given Strings
     # // And Checkbox Variable Is "on" Return True
     if (file.is_file()
-            and file.name.startswith(tuple(base_file_names))
-            and check_var_audio_skinable.get() == "on" or file.is_file()
-            and file.name.endswith(tuple(video_extension))
+            and file.name.startswith(tuple(audio_file_names))
+            and check_var_audio.get() == "on" or file.name.startswith(tuple(image_file_names))
+            and check_var_image.get() == "on" or file.name.endswith(tuple(video_extension))
             and check_var_videos.get() == "on" or file.name.endswith(".osb")
             and check_var_storyboard.get() == "on"):
         return True
