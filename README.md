@@ -1,4 +1,4 @@
-# **osu-cleaner | A simple junk file cleaner script**
+# **osu!cleaner | A simple junk file cleaner script**
 
 ![screenshot](https://i.imgur.com/qcMt2ua.png)
 
