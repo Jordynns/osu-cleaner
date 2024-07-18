@@ -14,7 +14,7 @@ from PIL import Image
 # // Tkinter Theme
 tk.set_appearance_mode("dark")
 tk.set_default_color_theme("dark-blue")
-pyglet.font.add_file("../Resources/Exo2-Regular.otf")
+pyglet.font.add_file("Resources/Exo2-Regular.otf")
 
 
 # // ------------------------------ \\
@@ -33,7 +33,7 @@ class App(tk.CTk):
         self.configure(fg_color="#161A1D")
 
         # // Exe | File Icon
-        self.iconbitmap("../Resources/icon.ico")
+        self.iconbitmap("Resources/icon.ico")
 
         # // Widgets
         self.menu = Menu(self)
@@ -52,8 +52,8 @@ class Labels(tk.CTkFrame):
         global total_label, file_size_label, time_label
 
         # // Logo Image
-        image = customtkinter.CTkImage(light_image=Image.open("../Resources/icon.ico"),
-                                       dark_image=Image.open("../Resources/icon.ico"),
+        image = customtkinter.CTkImage(light_image=Image.open("Resources/icon.ico"),
+                                       dark_image=Image.open("Resources/icon.ico"),
                                        size=(128, 128))
         image.label = customtkinter.CTkLabel(master, image=image, text="")
         image.label.place(x=820, y=4)
